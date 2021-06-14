@@ -72,12 +72,6 @@ app.get('/', authenticateJWT, async (req, res) => {
     res.send(await getTrelloList());
 });
 
-app.post('/', authenticateJWT, async (req, res) => {
-    const newTodo = req.body;
-    await insertTodo(newTodo);
-    res.send({ message: 'New todo inserted.' });
-})
-
 app.delete('/:id', authenticateJWT, async (req, res) => {
     const { role } = req.user;
 
@@ -91,43 +85,43 @@ app.delete('/:id', authenticateJWT, async (req, res) => {
 app.put('/:id', authenticateJWT, async (req, res) => {
     const updatedTodo = req.body;
     await updateTodo(req.params.id, updatedTodo);
-    res.send({ message: 'Todo Updated.' });
+    res.send(await getTrelloList());
 })
 
 startDatabase().then(async () => {
     await insertTrelloList({
-        list: [{
-            title: "last episode",
-            id: `list-${0}`,
-            cards: [
-                {
-                    id: `card-${0}`,
-                    text: "we created a static list and a static card"
-                },
-                {
-                    id: `card-${1}`,
-                    text: "we used a mix between materila UI and React styled components"
-                }
-            ]
-        },
-        {
-            title: "This episode",
-            id: `list-${1}`,
-            cards: [
-                {
-                    id: `card-${2}`,
-                    text: "We will create our first reducer"
-                },
-                {
-                    id: `card-${3}`,
-                    text: "render many cards on our list with static data"
-                },
-                {
-                    id: `card-${4}`,
-                    text: "some little changes forgot in the previous list"
-                }
-            ]
-        }
+        list: [
+        //     title: "last episode",
+        //     id: `list-${0}`,
+        //     cards: [
+        //         {
+        //             id: `card-${0}`,
+        //             text: "we created a static list and a static card"
+        //         },
+        //         {
+        //             id: `card-${1}`,
+        //             text: "we used a mix between materila UI and React styled components"
+        //         }
+        //     ]
+        // },
+        // {
+        //     title: "This episode",
+        //     id: `list-${1}`,
+        //     cards: [
+        //         {
+        //             id: `card-${2}`,
+        //             text: "We will create our first reducer"
+        //         },
+        //         {
+        //             id: `card-${3}`,
+        //             text: "render many cards on our list with static data"
+        //         },
+        //         {
+        //             id: `card-${4}`,
+        //             text: "some little changes forgot in the previous list"
+        //         }
+            // ]
+        // }
         ]
     });
 
